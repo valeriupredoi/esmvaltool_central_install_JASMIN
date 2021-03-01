@@ -1,0 +1,37 @@
+Install ESMValTool 2.1.1 (bugfix release)
+=========================================
+
+Steps to reproduce the installation of ESMValTool v2.1.1:
+(NOTE: this assumes a miniconda3 setup already being done
+for a previous ESMValTool version)
+
+```
+source conda_base.sh
+git clone https://github.com/ESMValGroup/ESMValTool.git ESMValTool_2.1.1
+conda -V (4.9.1)
+conda update conda (to update to 4.9.2)
+conda -V (4.9.2)
+mv miniconda3/envs/esmvaltool/ miniconda3/envs/esmvaltool-2.1.0
+cd ESMValTool_2.1.1
+conda env create -n esmvaltool -f environment.yml
+conda activate esmvaltool
+esmvaltool version
+ln -s /apps/jasmin/community/esmvaltool/julia-1.0.3/bin/julia /apps/jasmin/community/esmvaltool/miniconda3/envs/esmvaltool/bin/julia
+which julia
+julia --version (1.0.3)
+pip install -e .[develop]
+esmvaltool version
+esmvaltool --help
+esmvaltool install Julia
+esmvaltool install R
+pytest -m "not installation"
+pytest
+```
+
+Test results (pytest)
+=====================
+1 failed, 1133 passed, 1 skipped, 4 warnings in 411.67s (0:06:51)
+
+Test fails
+==========
+`tests/unit/diag_scripts/mlr/test_preprocess.py:43: AssertionError` - currently under investigation
